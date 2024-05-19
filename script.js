@@ -14,10 +14,14 @@ const urlByObjectId = (id) => `https://collectionapi.metmuseum.org/public/collec
 
 async function getObjectById(imgUrlById) {
     picture.innerHTML = "";
+    contentPreview.innerHTML = "";               
+    description.innerHTML = "";
     // debugger;
     try {
         picture.innerHTML = "";
+        contentPreview.innerHTML = "";               
         description.innerHTML = "";
+
         const response = await fetch(imgUrlById);
         const data = await response.json();
         if (data.isPublicDomain) {
@@ -39,7 +43,12 @@ async function getObjectById(imgUrlById) {
          Medium: ${data.medium}
          Dimensions: ${data.dimensions}
          Classification: ${data.classification}
-         Repository: ${data.repository}`;
+         Repository: ${data.repository}
+         
+         
+         
+         To view the next or previous picture please press the RIGHT or Left arrow on the keyboard.
+         `;
 
             description.append(span);
         } else {
@@ -52,7 +61,10 @@ async function getObjectById(imgUrlById) {
 }
 
 async function previewImage(url) {
-    contentPreview.innerHTML = "";
+    picture.innerHTML = "";
+    contentPreview.innerHTML = "";               
+    description.innerHTML = "";
+
     try {
         const response = await fetch(url);
         const data = await response.json();
@@ -70,7 +82,10 @@ async function previewImage(url) {
 }
 
 async function createPreviewImages(params = []) {
-    contentPreview.innerHTML = "";
+    picture.innerHTML = "";
+    contentPreview.innerHTML = "";               
+    description.innerHTML = "";
+
     params.forEach(param => {
         previewImage(param)
     })
@@ -87,6 +102,9 @@ async function getArrayOfObjectIds(urlByDep, i = 0) {
         getObjectById(urlByObjectId(objectIDs[i]));
         createPreviewImages([urlByObjectId(objectIDs[i]), urlByObjectId(objectIDs[i + 1]), urlByObjectId(objectIDs[i + 2])]);
         document.addEventListener('keydown', (event) => {
+            picture.innerHTML = "";
+            contentPreview.innerHTML = "";               
+            description.innerHTML = "";
             // debugger;
             // let i = 0;
             switch (event.code) {
@@ -115,7 +133,7 @@ async function getArrayOfObjectIds(urlByDep, i = 0) {
 
 
 async function getAndCreateListByDepartments(url) {
-    // debugger;
+    debugger;
 
     try {
         const response = await fetch(url);
@@ -127,21 +145,28 @@ async function getAndCreateListByDepartments(url) {
         contentPreview.innerHTML = "";
         const h1 = document.createElement('h1')
         h1.innerText = "The Exhibitions of Metropolitan Museum of Art";
-        contentPreview.append(h1)
+        contentPreview.append(h1);
+        description.innerText = "To start viewing the departments' materials please click to choose the department."
+
 
 
         departments.forEach(department => {
+
+
             const li = document.createElement('li');
             li.className = "department";
             li.innerText = department.displayName;
             const id = department.departmentId;
             ul.append(li);
 
-            //adding sublist
-            // getDataObjByObjId(urlByDepartmentId(department.displayName),li);
+            //adding event listener to choose the department
+            // description.innerText = "To start viewing the departments' materials please click to choose the department."
+
             li.addEventListener("click", function () {
                 picture.innerHTML = "";
-                contentPreview.innerHTML = "";
+                contentPreview.innerHTML = "";               
+                description.innerHTML = "";
+
                 getArrayOfObjectIds(urlByDepartmentId(id));
 
             })
