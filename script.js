@@ -100,7 +100,7 @@ async function getArrayOfObjectIds(urlByDep, i = 0) {
         const objectIDs = data.objectIDs;
 
         getObjectById(urlByObjectId(objectIDs[i]));
-        createPreviewImages([urlByObjectId(objectIDs[i]), urlByObjectId(objectIDs[i + 1]), urlByObjectId(objectIDs[i + 2])]);
+        createPreviewImages([urlByObjectId(objectIDs[i + 1]), urlByObjectId(objectIDs[i + 2]), urlByObjectId(objectIDs[i + 3])]);
         document.addEventListener('keydown', (event) => {
             picture.innerHTML = "";
             contentPreview.innerHTML = "";               
@@ -119,7 +119,7 @@ async function getArrayOfObjectIds(urlByDep, i = 0) {
             }
 
             getObjectById(urlByObjectId(objectIDs[i]));
-            createPreviewImages([urlByObjectId(objectIDs[i]), urlByObjectId(objectIDs[i + 1]), urlByObjectId(objectIDs[i + 2])]);
+            createPreviewImages([urlByObjectId(objectIDs[i + 1]), urlByObjectId(objectIDs[i + 2]), urlByObjectId(objectIDs[i + 3])]);
 
 
         });
@@ -160,7 +160,7 @@ async function getAndCreateListByDepartments(url) {
             ul.append(li);
 
             //adding event listener to choose the department
-            // description.innerText = "To start viewing the departments' materials please click to choose the department."
+            
 
             li.addEventListener("click", function () {
                 picture.innerHTML = "";
