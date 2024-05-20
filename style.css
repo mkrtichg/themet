@@ -74,9 +74,12 @@
 
 #img{
     height: 700px;
+    width: 1350px;
+    object-fit: contain;
 
 }
 
 .currViewimg{
-    height: 195px;
+    /* height: 195px; */
+    object-fit: scale-down;
 }
