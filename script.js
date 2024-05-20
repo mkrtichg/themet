@@ -24,7 +24,7 @@ async function getObjectById(imgUrlById) {
 
         const response = await fetch(imgUrlById);
         const data = await response.json();
-        if (data.isPublicDomain) {
+       
             const imgUrl = data.primaryImage;
             const img = document.createElement('img');
             img.src = imgUrl;
@@ -51,10 +51,7 @@ async function getObjectById(imgUrlById) {
          `;
 
             description.append(span);
-        } else {
-            alert('the image is not public');
-        }
-
+        
     } catch (error) {
         console.log(error.message);
     }
@@ -118,6 +115,10 @@ async function getArrayOfObjectIds(urlByDep, i = 0) {
                     break;
             }
 
+            picture.innerHTML = "";
+            contentPreview.innerHTML = "";               
+            description.innerHTML = "";
+
             getObjectById(urlByObjectId(objectIDs[i]));
             createPreviewImages([urlByObjectId(objectIDs[i + 1]), urlByObjectId(objectIDs[i + 2]), urlByObjectId(objectIDs[i + 3])]);
 
@@ -178,61 +179,7 @@ async function getAndCreateListByDepartments(url) {
 }
 
 
-
-
-//creating function for getting data by department ID
-//and creating sublist for departments
-/*
-async function getDataObjByObjId(url,list) {
-    debugger;
-    const subUl = document.createElement("ul");
-    list.append(subUl);    
-   try{
-    const response = await fetch(url);
-    const data = await response.json();
-    const objectIDs = data.objectIDs;
-    objectIDs.forEach(objectID => {
-        const subLi = createElement("li");
-        subLi.append(objectID);
-        subUl.append(subLi);
-        subLi.addEventListener('click', () => {
-            getObjectById(urlByObjectId(objectID));
-
-        });
-
-    });
-   } catch (error) {
-    console.log(error.message);
-}
-
-}
-
-*/
-
-
-
-// function creatingListByDepartments() {
-//     debugger;
-//     const departments = gettingDepartments(urlByDepartments);
-//     departments.forEach(department => {
-//         const li = document.createElement('li');
-//         li.className = "department";
-//         li.innerText = department.displayName;
-//         ul.append(li);
-
-// })
-//     }
 getAndCreateListByDepartments(urlByDepartments);
-
-
-
-
-
-
-
-
-
-
 
 
 
