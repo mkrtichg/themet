@@ -150,28 +150,7 @@ async function getAndCreateListByDepartments(url) {
                 getObjectById(urlByObjectId(objectIDs[i]));
                 createPreviewImages([urlByObjectId(objectIDs[i + 1]), urlByObjectId(objectIDs[i + 2]), urlByObjectId(objectIDs[i + 3])]);
 
-                document.addEventListener('keydown', (event) => {
-                    debugger;
-                    picture.innerHTML = "";
-                    contentPreview.innerHTML = "";
-                    description.innerHTML = "";
-
-                    switch (event.code) {
-                        case 'ArrowLeft': {
-                            if (i === 0) { break };
-                            i--;
-                            break;
-                        }
-                        case 'ArrowRight': {
-                            if (i === objectIDs.length - 1) { break };
-                            i++;
-                            break;
-                        }
-                    }
-                    getObjectById(urlByObjectId(objectIDs[i]));
-                    createPreviewImages([urlByObjectId(objectIDs[i + 1]), urlByObjectId(objectIDs[i + 2]), urlByObjectId(objectIDs[i + 3])]);
-
-                });
+             
 
 
 
@@ -185,6 +164,28 @@ async function getAndCreateListByDepartments(url) {
     }
 }
 
+document.addEventListener('keydown', (event) => {
+    debugger;
+    picture.innerHTML = "";
+    contentPreview.innerHTML = "";
+    description.innerHTML = "";
+
+    switch (event.code) {
+        case 'ArrowLeft': {
+            if (i === 0) { break };
+            i--;
+            break;
+        }
+        case 'ArrowRight': {
+            if (i === objectIDs.length - 1) { break };
+            i++;
+            break;
+        }
+    }
+    getObjectById(urlByObjectId(objectIDs[i]));
+    createPreviewImages([urlByObjectId(objectIDs[i + 1]), urlByObjectId(objectIDs[i + 2]), urlByObjectId(objectIDs[i + 3])]);
+
+});
 
 getAndCreateListByDepartments(urlByDepartments);
 
