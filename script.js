@@ -27,6 +27,8 @@ async function getObjectById(imgUrlById) {
         img.src = imgUrl;
         img.alt = data.title;
         img.id = "img"
+        picture.innerHTML = "";
+        description.innerHTML = "";
         picture.append(img);
         const span = document.createElement('span')
         span.id = 'descText';
@@ -65,6 +67,7 @@ async function previewImage(url) {
         img.src = imgUrl;
         img.alt = data.title;
         img.className = "currViewimg";
+        contentPreview.innerHTML = "";
         contentPreview.append(img);
 
 
@@ -80,9 +83,9 @@ async function createPreviewImages(params = []) {
     // contentPreview.innerHTML = "";
     // description.innerHTML = "";
 
-    for(let i = 0; i < params.length; i++){
+    for (let i = 0; i < params.length; i++) {
         await previewImage(params[i])
-    }   
+    }
 }
 
 async function getArrayOfObjectIds(urlByDep) {
@@ -95,29 +98,6 @@ async function getArrayOfObjectIds(urlByDep) {
         const response = await fetch(urlByDep);
         const data = await response.json();
         data.objectIDs.forEach(objectID => objectIDs.push(objectID));
-
-        document.addEventListener('keydown', (event) => {
-            debugger;
-            picture.innerHTML = "";
-            contentPreview.innerHTML = "";
-            description.innerHTML = "";
-
-            switch (event.code) {
-                case 'ArrowLeft':
-                    if (i === 0) { break };
-                    i--;
-                    getObjectById(urlByObjectId(objectIDs[i]));
-                    createPreviewImages([urlByObjectId(objectIDs[i + 1]), urlByObjectId(objectIDs[i + 2]), urlByObjectId(objectIDs[i + 3])]);
-                    break;
-                case 'ArrowRight':
-                    if (i === objectIDs.length - 1) { break };
-                    i++;
-                    getObjectById(urlByObjectId(objectIDs[i]));
-                    createPreviewImages([urlByObjectId(objectIDs[i + 1]), urlByObjectId(objectIDs[i + 2]), urlByObjectId(objectIDs[i + 3])]);
-                    break;
-            }                  
-            
-        });
 
     } catch (error) {
         console.log(error.message);
@@ -169,6 +149,29 @@ async function getAndCreateListByDepartments(url) {
 
                 getObjectById(urlByObjectId(objectIDs[i]));
                 createPreviewImages([urlByObjectId(objectIDs[i + 1]), urlByObjectId(objectIDs[i + 2]), urlByObjectId(objectIDs[i + 3])]);
+
+                document.addEventListener('keydown', (event) => {
+                    debugger;
+                    picture.innerHTML = "";
+                    contentPreview.innerHTML = "";
+                    description.innerHTML = "";
+
+                    switch (event.code) {
+                        case 'ArrowLeft': {
+                            if (i === 0) { break };
+                            i--;
+                            break;
+                        }
+                        case 'ArrowRight': {
+                            if (i === objectIDs.length - 1) { break };
+                            i++;
+                            break;
+                        }
+                    }
+                    getObjectById(urlByObjectId(objectIDs[i]));
+                    createPreviewImages([urlByObjectId(objectIDs[i + 1]), urlByObjectId(objectIDs[i + 2]), urlByObjectId(objectIDs[i + 3])]);
+
+                });
 
 
 
