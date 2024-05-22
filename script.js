@@ -8,33 +8,30 @@ const urlByDepartments = "https://collectionapi.metmuseum.org/public/collection/
 const objectsUrl = "https://collectionapi.metmuseum.org/public/collection/v1/objects";
 const urlByDepartmentId = (depId) => `https://collectionapi.metmuseum.org/public/collection/v1/objects?departmentIds=${depId}`;
 const urlByObjectId = (id) => `https://collectionapi.metmuseum.org/public/collection/v1/objects/${id}`
+let i = 0;
+const objectIDs = [];
+
 
 
 
 
 async function getObjectById(imgUrlById) {
-    picture.innerHTML = "";
-    contentPreview.innerHTML = "";               
-    description.innerHTML = "";
     // debugger;
-    try {
-        picture.innerHTML = "";
-        contentPreview.innerHTML = "";               
-        description.innerHTML = "";
 
+    try {
         const response = await fetch(imgUrlById);
         const data = await response.json();
-       
-            const imgUrl = data.primaryImage;
-            const img = document.createElement('img');
-            img.src = imgUrl;
-            img.alt = data.title;
-            img.id = "img"
-            picture.append(img);
-            const span = document.createElement('span')
-            span.id = 'descText';
-            span.innerText = "",
-                span.innerText = `        
+
+        const imgUrl = data.primaryImage;
+        const img = document.createElement('img');
+        img.src = imgUrl;
+        img.alt = data.title;
+        img.id = "img"
+        picture.append(img);
+        const span = document.createElement('span')
+        span.id = 'descText';
+        span.innerText = "",
+            span.innerText = `        
          Title: ${data.title}
          Artist: ${data.artistDisplayName} (${data.artistDisplayBio})
          Department: ${data.department}
@@ -50,17 +47,15 @@ async function getObjectById(imgUrlById) {
          To view the next or previous picture please press the RIGHT or Left arrow on the keyboard.
          `;
 
-            description.append(span);
-        
+        description.append(span);
+
     } catch (error) {
         console.log(error.message);
     }
 }
 
+
 async function previewImage(url) {
-    picture.innerHTML = "";
-    contentPreview.innerHTML = "";               
-    description.innerHTML = "";
 
     try {
         const response = await fetch(url);
@@ -78,51 +73,50 @@ async function previewImage(url) {
     }
 }
 
-async function createPreviewImages(params = []) {
-    picture.innerHTML = "";
-    contentPreview.innerHTML = "";               
-    description.innerHTML = "";
 
-    params.forEach(param => {
-        previewImage(param)
-    })
+async function createPreviewImages(params = []) {
+    // debugger;
+    // picture.innerHTML = "";
+    // contentPreview.innerHTML = "";
+    // description.innerHTML = "";
+
+    for(let i = 0; i < params.length; i++){
+        await previewImage(params[i])
+    }   
 }
 
-async function getArrayOfObjectIds(urlByDep, i = 0) {
+async function getArrayOfObjectIds(urlByDep) {
+    // debugger;
+
+
 
     try {
 
         const response = await fetch(urlByDep);
         const data = await response.json();
-        const objectIDs = data.objectIDs;
+        data.objectIDs.forEach(objectID => objectIDs.push(objectID));
 
-        getObjectById(urlByObjectId(objectIDs[i]));
-        createPreviewImages([urlByObjectId(objectIDs[i + 1]), urlByObjectId(objectIDs[i + 2]), urlByObjectId(objectIDs[i + 3])]);
         document.addEventListener('keydown', (event) => {
+            debugger;
             picture.innerHTML = "";
-            contentPreview.innerHTML = "";               
+            contentPreview.innerHTML = "";
             description.innerHTML = "";
-            // debugger;
-            // let i = 0;
+
             switch (event.code) {
                 case 'ArrowLeft':
                     if (i === 0) { break };
                     i--;
+                    getObjectById(urlByObjectId(objectIDs[i]));
+                    createPreviewImages([urlByObjectId(objectIDs[i + 1]), urlByObjectId(objectIDs[i + 2]), urlByObjectId(objectIDs[i + 3])]);
                     break;
                 case 'ArrowRight':
                     if (i === objectIDs.length - 1) { break };
                     i++;
+                    getObjectById(urlByObjectId(objectIDs[i]));
+                    createPreviewImages([urlByObjectId(objectIDs[i + 1]), urlByObjectId(objectIDs[i + 2]), urlByObjectId(objectIDs[i + 3])]);
                     break;
-            }
-
-            picture.innerHTML = "";
-            contentPreview.innerHTML = "";               
-            description.innerHTML = "";
-
-            getObjectById(urlByObjectId(objectIDs[i]));
-            createPreviewImages([urlByObjectId(objectIDs[i + 1]), urlByObjectId(objectIDs[i + 2]), urlByObjectId(objectIDs[i + 3])]);
-
-
+            }                  
+            
         });
 
     } catch (error) {
@@ -134,7 +128,7 @@ async function getArrayOfObjectIds(urlByDep, i = 0) {
 
 
 async function getAndCreateListByDepartments(url) {
-    debugger;
+    // debugger;
 
     try {
         const response = await fetch(url);
@@ -147,7 +141,7 @@ async function getAndCreateListByDepartments(url) {
         const h1 = document.createElement('h1')
         h1.innerText = "The Exhibitions of Metropolitan Museum of Art";
         contentPreview.append(h1);
-        description.innerText = "To start viewing the departments' materials please click to choose the department."
+        description.innerText = "To start viewing the departments' materials please click to choose the department.";
 
 
 
@@ -161,17 +155,27 @@ async function getAndCreateListByDepartments(url) {
             ul.append(li);
 
             //adding event listener to choose the department
-            
+
 
             li.addEventListener("click", function () {
+                // debugger;
+                i = 0;
+                objectIDs.splice(0);
                 picture.innerHTML = "";
-                contentPreview.innerHTML = "";               
+                contentPreview.innerHTML = "";
                 description.innerHTML = "";
 
                 getArrayOfObjectIds(urlByDepartmentId(id));
 
+                getObjectById(urlByObjectId(objectIDs[i]));
+                createPreviewImages([urlByObjectId(objectIDs[i + 1]), urlByObjectId(objectIDs[i + 2]), urlByObjectId(objectIDs[i + 3])]);
+
+
+
             })
         })
+
+
 
     } catch (error) {
         console.log(error.message);
