@@ -8,15 +8,16 @@ const urlByDepartments = "https://collectionapi.metmuseum.org/public/collection/
 const objectsUrl = "https://collectionapi.metmuseum.org/public/collection/v1/objects";
 const urlByDepartmentId = (depId) => `https://collectionapi.metmuseum.org/public/collection/v1/objects?departmentIds=${depId}`;
 const urlByObjectId = (id) => `https://collectionapi.metmuseum.org/public/collection/v1/objects/${id}`
+// 
 let i = 0;
-const objectIDs = [];
+let objectIDs;
 
 
 
 
 
 async function getObjectById(imgUrlById) {
-    // debugger;
+    debugger;
 
     try {
         const response = await fetch(imgUrlById);
@@ -26,11 +27,16 @@ async function getObjectById(imgUrlById) {
         const img = document.createElement('img');
         img.src = imgUrl;
         img.alt = data.title;
-        img.id = "img"
+        img.id = "img";
+        const sourceLink = data.objectURL;
+        const source = document.createElement('a');
+        source.href = sourceLink;
+        source.target="_blank"
         picture.innerHTML = "";
         description.innerHTML = "";
-        picture.append(img);
-        const span = document.createElement('span')
+        source.append(img)
+        picture.append(source);
+        const span = document.createElement('span');
         span.id = 'descText';
         span.innerText = "",
             span.innerText = `        
@@ -58,6 +64,7 @@ async function getObjectById(imgUrlById) {
 
 
 async function previewImage(url) {
+    // debugger;
 
     try {
         const response = await fetch(url);
@@ -67,7 +74,7 @@ async function previewImage(url) {
         img.src = imgUrl;
         img.alt = data.title;
         img.className = "currViewimg";
-        contentPreview.innerHTML = "";
+        // contentPreview.innerHTML = "";
         contentPreview.append(img);
 
 
@@ -78,26 +85,24 @@ async function previewImage(url) {
 
 
 async function createPreviewImages(params = []) {
-    // debugger;
-    // picture.innerHTML = "";
-    // contentPreview.innerHTML = "";
-    // description.innerHTML = "";
+    // debugger;    
+    contentPreview.innerHTML = "";   
 
     for (let i = 0; i < params.length; i++) {
         await previewImage(params[i])
     }
 }
 
+
+
 async function getArrayOfObjectIds(urlByDep) {
     // debugger;
 
-
-
-    try {
-
+    try {        
         const response = await fetch(urlByDep);
         const data = await response.json();
-        data.objectIDs.forEach(objectID => objectIDs.push(objectID));
+        // data.objectIDs.forEach(objectID => objectIDs.push(objectID));
+        objectIDs = [...data.objectIDs];
 
     } catch (error) {
         console.log(error.message);
@@ -140,10 +145,8 @@ async function getAndCreateListByDepartments(url) {
             li.addEventListener("click", function () {
                 // debugger;
                 i = 0;
-                objectIDs.splice(0);
-                picture.innerHTML = "";
-                contentPreview.innerHTML = "";
-                description.innerHTML = "";
+                // objectIDs.splice(0);
+             
 
                 getArrayOfObjectIds(urlByDepartmentId(id));
 
@@ -165,10 +168,8 @@ async function getAndCreateListByDepartments(url) {
 }
 
 document.addEventListener('keydown', (event) => {
-    debugger;
-    picture.innerHTML = "";
-    contentPreview.innerHTML = "";
-    description.innerHTML = "";
+    // debugger;
+    
 
     switch (event.code) {
         case 'ArrowLeft': {
@@ -182,6 +183,7 @@ document.addEventListener('keydown', (event) => {
             break;
         }
     }
+
     getObjectById(urlByObjectId(objectIDs[i]));
     createPreviewImages([urlByObjectId(objectIDs[i + 1]), urlByObjectId(objectIDs[i + 2]), urlByObjectId(objectIDs[i + 3])]);
 

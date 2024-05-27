@@ -62,6 +62,27 @@
     justify-content: center;
 }
 
+/* ----------------------------------------------------------------------------------*/
+
+
+.slider input[type=radio],
+.slider .slide .slider-arrow,
+.slider .content {
+    display: none;
+}
+
+.slider input[type=radio]:checked~.slider-arrow {
+    display: flex;
+}
+
+.slider .input[type=radio]:checked~.content {
+    display: flex;
+}
+
+
+
+/* ----------------------------------------------------------------------------------*/
+
 #picture{
     width: 1350px;
     height: 700px;
@@ -85,7 +106,7 @@
 }
 
 .currViewimg{
-    /* height: 195px; */
+    height: 195px;
     object-fit: scale-down;
 }
 

@@ -1,18 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Homework_8</title>
     <link rel="stylesheet" href="./style.css">
-    <link rel="shortcut icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSismxAQ1GvQjUa7WOsE2mqKu-ONI1FLnQKg9eZqEz-HaBUuay8rcqXFLd0Iexmedu-Cak&usqp=CAU" 
-    type="image/x-icon">
+    <link rel="shortcut icon"
+        href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSismxAQ1GvQjUa7WOsE2mqKu-ONI1FLnQKg9eZqEz-HaBUuay8rcqXFLd0Iexmedu-Cak&usqp=CAU"
+        type="image/x-icon">
 </head>
+
 <body>
     <div class="display">
         <div id="leftSideMenuBar">
             <div id="name">
-                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="-5 -5 50 50" style="height:80px;width:80px">
+                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="-5 -5 50 50"
+                    style="height:80px;width:80px">
                     <path fill="currentColor" d="M39.74 27.009a11.6 11.6 0 0 0-.88-1.861 10 10 0 0 0-1.33-1.824 7.6 7.6 0 0 0-1.72-1.387
                      4 4 0 0 0-2.04-.55v15.4A3 3 0 0 0 34 38a2.65 2.65 0 0 0 .64.883 2.8 2.8 0 0 0 .95.55 3.5 3.5 0 0 0 1.17.19V40h-6.13V21.577a4.9
                      4.9 0 0 0-2.08.4 4.2 4.2 0 0 0-1.47 1.111 5.3 5.3 0 0 0-.94 1.709 11.5 11.5 0 0 0-.54 2.213h-.26a11.5 11.5 0 0 0-.54-2.194 5.5
@@ -45,18 +49,58 @@
         <div id="general">
             <div id="contentPreview"></div>
             <div id="mainView">
-                <div id="picture"></div>
+                <div class="slider">
+                    <input type="radio" id="radio_slider1_slide2" name="slider1">
+                    <div class="slider-arrow previous">
+                      <label for="radio_slider1_slide1">
+                        <img src="../common/arrow-sm-right.svg" />
+                      </label>
+                    </div>
+                    <div id="picture"></div>
+                    <div class="slider-arrow next">
+                        <label for="radio_slider1_slide3">
+                          <img src="../common/arrow-sm-right.svg" />
+                        </label>
+                      </div>>
+                </div>
+
                 <div id="description"></div>
             </div>
 
         </div>
     </div>
 
+
+    <div class="slides">
+        <div class="slide">
+            <input type="radio" id="radio_slider1_slide1" name="slider1" checked="checked">
+            <div class="content">
+                <img src="../common/werner-sevenster-JuP0ZG0UNi0-unsplash.jpg">
+            </div>
+        </div>
+        <div class="slide">
+            <input type="radio" id="radio_slider1_slide2" name="slider1">
+            <div class="content">
+                <img src="../common/casey-horner-8ftuBebG3_M-unsplash.jpg" loading="lazy">
+            </div>
+        </div>
+        <div class="slide">
+            <input type="radio" id="radio_slider1_slide3" name="slider1">
+            <div class="content">
+                <img src="../common/laura-smetsers-H-TW2CoNtTk-unsplash.jpg" loading="lazy">
+            </div>
+        </div>
+    </div>
+
+
     <footer>
-        This site is created for educational purposes, as an examen material by the theme "Getting data from API" during the JavaScript course from MET open API.   
-        <div class="global-footer__copyright-info">© 2000–<!-- -->2024<!-- --> The Metropolitan Museum of Art. All rights reserved.</div>      
+        This site is created for educational purposes, as an examen material by the theme "Getting data from API" during
+        the JavaScript course from MET open API.
+        <div class="global-footer__copyright-info">© 2000–<!-- -->2024<!-- --> The Metropolitan Museum of Art. All
+            rights reserved.</div>
     </footer>
     <script src="./script.js"></script>
-   
+
 </body>
+
 </html>
